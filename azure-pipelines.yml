@@ -9,6 +9,7 @@ trigger:
 pool: Default
 
 steps:
+# Step 1: Use Maven to build the application
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
@@ -20,4 +21,9 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
 
+# Step 2: Publish the built JAR file as an artifact
 - task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/target'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
